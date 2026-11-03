@@ -29,5 +29,98 @@ namespace ObligatoriskOpgaveSeleniumTest
             Assert.Equal(3, table.FindElements(By.TagName("tr")).Count); // 3 rows: header, and 2 data rows
 
         }
+
+        [Fact]
+        public void GetByIdTest_TitleFilter()
+        {
+            //Arrange
+            //IWebDriver driver = new ChromeDriver(driverPath);
+            IWebDriver driver = new EdgeDriver(driverPath);
+
+            //Act
+            driver.Navigate().GoToUrl(url);
+            //Assert
+            Assert.Equal("Records", driver.Title);
+
+            //Act
+            IWebElement filterInput = driver.FindElement(By.Id("filterInput"));
+            filterInput.SendKeys("Song 1");
+            IWebElement filterByTitleButton = driver.FindElement(By.Id("filterByTitleButton"));
+            filterByTitleButton.Click();
+
+            //Assert
+            IWebElement table = driver.FindElement(By.Id("table"));
+            Assert.NotNull(table);
+            Assert.Equal(2, table.FindElements(By.TagName("tr")).Count); // 2 rows: header and 1 data row
+            Assert.Contains("Song 1", table.Text);
+        }
+        [Fact]
+        public void GetAllRecords_ArtistFilter()
+        {
+            //Arrange
+            //IWebDriver driver = new ChromeDriver(driverPath);
+            IWebDriver driver = new EdgeDriver(driverPath);
+            //Act
+            driver.Navigate().GoToUrl(url);
+            //Assert
+            Assert.Equal("Records", driver.Title);
+            //Act
+            IWebElement filterInput = driver.FindElement(By.Id("filterInput"));
+            filterInput.SendKeys("Artist 1");
+            IWebElement filterByArtistButton = driver.FindElement(By.Id("filterByArtistButton"));
+            filterByArtistButton.Click();
+            //Assert
+            IWebElement table = driver.FindElement(By.Id("table"));
+            Assert.NotNull(table);
+            Assert.Equal(2, table.FindElements(By.TagName("tr")).Count); // 2 rows: header and 1 data row
+            Assert.Contains("Artist 1", table.Text);
+        }
+
+        [Fact]
+        public void GetAllRecords_DurationFilter()
+        {
+            //Arrange
+            //IWebDriver driver = new ChromeDriver(driverPath);
+            IWebDriver driver = new EdgeDriver(driverPath);
+            //Act
+            driver.Navigate().GoToUrl(url);
+            //Assert
+            Assert.Equal("Records", driver.Title);
+            //Act
+            IWebElement filterInput = driver.FindElement(By.Id("filterInput"));
+            filterInput.SendKeys("200");
+            IWebElement FilterByDurationButton = driver.FindElement(By.Id("filterByDurationButton"));
+            FilterByDurationButton.Click();
+            //Assert
+            IWebElement table = driver.FindElement(By.Id("table"));
+            Assert.NotNull(table);
+            Assert.Equal(2, table.FindElements(By.TagName("tr")).Count); // 2 rows: header and 1 data row
+            Assert.Contains("200", table.Text);
+        }
+
+
+        [Fact]
+        public void GetAllRecords_YearFilter()
+        {
+            //Arrange
+            //IWebDriver driver = new ChromeDriver(driverPath);
+            IWebDriver driver = new EdgeDriver(driverPath);
+            //Act
+            driver.Navigate().GoToUrl(url);
+            //Assert
+            Assert.Equal("Records", driver.Title);
+            //Act
+            IWebElement filterInput = driver.FindElement(By.Id("filterInput"));
+            filterInput.SendKeys("2020");
+            IWebElement FilterByPublicationYear = driver.FindElement(By.Id("filterByPublicationYearButton"));
+            FilterByPublicationYear.Click();
+            //Assert
+            IWebElement table = driver.FindElement(By.Id("table"));
+            Assert.NotNull(table);
+            Assert.Equal(2, table.FindElements(By.TagName("tr")).Count); // 2 rows: header and 1 data row
+            Assert.Contains("2020", table.Text);
+        }
+
+
     }
 }
